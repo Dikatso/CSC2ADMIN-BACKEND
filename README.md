@@ -1,7 +1,7 @@
 ## Setup virtual environment
 
 ```sh
-"cd into project first"
+"cd into project first!"
 python3 -m venv .venv
 source .venv/bin/activate
 ```
