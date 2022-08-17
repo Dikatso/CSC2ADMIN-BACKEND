@@ -1,15 +1,24 @@
 from typing import Union
-
+from src.prisma import prisma
+from src.apis import apis
 from fastapi import FastAPI
+from prisma import Prisma
+
+db = Prisma(auto_register=True)
 
 app = FastAPI()
+app.include_router(apis, prefix="/apis")
+
+@app.on_event("startup")
+async def startup():
+    print("connecting to db...")
+    await db.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    print("shutting down db...")
+    await db.disconnect()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World V2"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
+    return {"version": "1.0.0"}
