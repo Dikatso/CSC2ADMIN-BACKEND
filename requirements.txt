@@ -49,3 +49,6 @@ virtualenv==20.14.1
 virtualenv-clone==0.5.7
 watchgod==0.8.2
 websockets==10.3
+google-cloud-storage
+firebase
+firebase_admin
