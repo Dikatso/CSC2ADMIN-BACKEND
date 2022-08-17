@@ -3,6 +3,11 @@ from src.prisma import prisma
 from src.apis import apis
 from fastapi import FastAPI
 from prisma import Prisma
+from firebase_admin import credentials, initialize_app, storage
+
+def initialiseFileStorage():
+    cred = credentials.Certificate("serviceAccountKey.json")
+    initialize_app(cred, {'storageBucket': 'cs2admin.appspot.com'})
 
 db = Prisma(auto_register=True)
 
@@ -11,6 +16,8 @@ app.include_router(apis, prefix="/apis")
 
 @app.on_event("startup")
 async def startup():
+    print("initialising fileStorage...")
+    initialiseFileStorage()
     print("connecting to db...")
     await db.connect()
 
