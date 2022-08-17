@@ -19,11 +19,13 @@ async def startup():
     print("initialising fileStorage...")
     initialiseFileStorage()
     print("connecting to db...")
+    await prisma.connect()
     await db.connect()
 
 @app.on_event("shutdown")
 async def shutdown():
     print("shutting down db...")
+    await prisma.disconnect()
     await db.disconnect()
 
 @app.get("/")
