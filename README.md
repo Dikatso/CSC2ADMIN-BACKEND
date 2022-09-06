@@ -18,10 +18,14 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-## Notes
+## After installing packes
 
-> After installing packages
-
+> run
 ```sh
 pip freeze > requirements.txt
+```
+
+> generate prisma client
+```sh
+prisma generate
 ```
