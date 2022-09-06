@@ -79,7 +79,7 @@ async def sign_up(signUpDto: SignUpDto):
     )
     return userCreated
 
-@router.post("/auth/users", tags=["auth"])
+@router.get("/auth/users", tags=["auth"])
 async def find_all():
     users = await User.prisma().find_many()
     return users

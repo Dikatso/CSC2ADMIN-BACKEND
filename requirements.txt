@@ -52,3 +52,4 @@ websockets==10.3
 google-cloud-storage
 firebase
 firebase_admin
+emoji

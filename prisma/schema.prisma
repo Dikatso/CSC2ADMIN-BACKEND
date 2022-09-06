@@ -49,8 +49,6 @@ model Enquiry {
   updatedAt           DateTime?   @default(now())
   status              Status      
   type                EnquiryType
-  enquiryMessage      String      @db.VarChar(255)
-  enquiryReplyMessage String?      @db.VarChar(255)
   extensionDuration   String?     @db.VarChar(255)
   attatchmentLink     String?     @db.VarChar(255)
   assignmentNo        String?     @db.VarChar(255)
