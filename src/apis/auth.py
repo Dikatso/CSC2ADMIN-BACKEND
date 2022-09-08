@@ -22,9 +22,7 @@ class SignUpDto(BaseModel):
     email: str 
     password: str
     name: str
-    studentId: str = None
-    convenerId: str = None
-    taId: str = None
+    uctId: str = None
     role: str = None
 
 class SignInDto(BaseModel):
@@ -71,9 +69,7 @@ async def sign_up(signUpDto: SignUpDto):
             "name": signUpDto.name,
             "email": signUpDto.email,
             "password": encryptePassword,
-            "taId": signUpDto.taId,
-            "studentId": signUpDto.studentId,
-            "convenerId": signUpDto.convenerId,
+            "uctId": signUpDto.uctId,
             "role": signUpDto.role
         }
     )
