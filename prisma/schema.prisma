@@ -29,9 +29,10 @@ enum EnquiryType {
 
 model User {
   id         String    @id @default(cuid()) @db.VarChar(255)
-  studentId  String?   @unique @db.VarChar(255)
-  taId       String?   @unique @db.VarChar(255)
-  convenerId String?   @unique @db.VarChar(255)
+  uctId String    @unique @db.VarChar(255)
+  // studentId  String?   @unique @db.VarChar(255)
+  // taId       String?   @unique @db.VarChar(255)
+  // convenerId String?   @unique @db.VarChar(255)
   name       String?    @db.VarChar(255)
   email      String?    @unique @db.VarChar(255)
   password   String?    @db.VarChar(255)
