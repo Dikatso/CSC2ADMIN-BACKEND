@@ -1,4 +1,3 @@
-import emoji
 from typing import Union
 from src.prisma import prisma
 from src.apis import apis
