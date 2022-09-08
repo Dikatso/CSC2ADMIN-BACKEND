@@ -6,16 +6,18 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import os
 import bcrypt
 import jwt
+from prisma.models import User
 
 jwtSecret = os.environ.get("JWT_SECRET")
 
-def signJWT(user_id: str) -> Dict[str, str]:
+def signJWT(user: User) -> Dict[str, str]:
     EXPIRES = datetime.now(tz=timezone.utc) + timedelta(days=365)
     print(EXPIRES)
 
     payload = {
         "exp": EXPIRES,
-        "userId": user_id,
+        "userId": user.id,
+        "role": user.role,
     }
     token = jwt.encode(payload, jwtSecret, algorithm="HS256")
 

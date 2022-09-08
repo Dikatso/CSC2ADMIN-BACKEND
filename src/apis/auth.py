@@ -48,7 +48,7 @@ async def sign_in(signInDto: SignInDto):
     del user.password
 
     if validated:
-        token = signJWT(user.id)
+        token = signJWT(user)
         return SignInResponse(token=token, user=user)
 
     return None
