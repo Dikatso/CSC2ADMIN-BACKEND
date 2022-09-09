@@ -2,7 +2,7 @@ import datetime
 import email
 from pickle import TRUE
 from typing import List, Optional
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from src.prisma import prisma
 from fastapi.encoders import jsonable_encoder
@@ -22,8 +22,8 @@ class SignUpDto(BaseModel):
     email: str 
     password: str
     name: str
-    uctId: str = None
-    role: str = None
+    uctId: str 
+    role: str 
 
 class SignInDto(BaseModel):
     email: str
@@ -33,8 +33,7 @@ class SignInResponse(BaseModel):
     token: str
     user: User
 
-
-@router.get("/auth/sign-in", tags=["auth"])
+@router.post("/auth/sign-in", tags=["auth"])
 async def sign_in(signInDto: SignInDto):
     user = await User.prisma().find_first(
         where={
@@ -43,7 +42,7 @@ async def sign_in(signInDto: SignInDto):
     )
 
     validated = validatePassword(signInDto.password, user.password)
-    del user.password
+    del user.password, user.createdAt, user.Enquiries, user.updatedAt
 
     if validated:
         token = signJWT(user)
