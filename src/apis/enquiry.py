@@ -32,6 +32,7 @@ async def create_enquiry(createEnquiryDto: CreateEnquiryDto):
         data={
             "status": "Recieved",
             "type": createEnquiryDto.type,
+            "assignmentNo": createEnquiryDto.assignmentNo,
             "extensionDuration": createEnquiryDto.extensionDuration,
             "testNo": createEnquiryDto.testNo,
             "courseCode": createEnquiryDto.courseCode,

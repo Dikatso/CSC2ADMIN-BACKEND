@@ -1,4 +1,4 @@
-import io
+import io, os
 from typing import List
 from fastapi import APIRouter, Depends
 from src.prisma import prisma
@@ -8,28 +8,30 @@ from fastapi import FastAPI, File, UploadFile
 from prisma.models import Enquiry, User
 from src.file.fileStorage import upload_file
 from firebase_admin import storage
+import shutil
 
 router = APIRouter()
 
 @router.post("/file/{enquiryId}", tags=["file"])
 async def create_file(enquiryId: str, fileUpload: UploadFile = File(...)):
-    print("> uploaded file:", fileUpload.filename)
+    fileName = fileUpload.filename
 
-    contents = await fileUpload.read()
-    temp_file = io.BytesIO()
-    temp_file.write(contents)
-    temp_file.seek(0)
-
+    # save file to local disk
+    with open(fileName, "wb") as buffer:
+        shutil.copyfileobj(fileUpload.file, buffer)
+    
+    # upload file from local disk
     bucket = storage.bucket()
-    blob = bucket.blob(fileUpload.filename)
-    blob.upload_from_file(temp_file)
+    blob = bucket.blob(fileName)
+    blob.upload_from_filename(fileName)
 
-    temp_file.close()
+    os.remove(fileName) # remove file from local disk
 
-    # Opt : if you want to make public access from the URL
+    # allow public access of file
     blob.make_public()
 
     fileUrl = blob.public_url
+    print("file url: ", fileUrl)
 
     updatedEnquiry = await Enquiry.prisma().update(
         where={
