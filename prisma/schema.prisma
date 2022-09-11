@@ -28,32 +28,31 @@ enum EnquiryType {
 }
 
 model User {
-  id         String    @id @default(cuid()) @db.VarChar(255)
-  uctId String    @unique @db.VarChar(255)
-  // studentId  String?   @unique @db.VarChar(255)
-  // taId       String?   @unique @db.VarChar(255)
-  // convenerId String?   @unique @db.VarChar(255)
-  name       String?    @db.VarChar(255)
-  email      String?    @unique @db.VarChar(255)
-  password   String?    @db.VarChar(255)
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @default(now())
-  role       Role?
-  Enquiries  Enquiry[]
+  id        String    @id @default(cuid())
+  uctId     String    @unique @db.VarChar(255)
+  name      String?   @db.VarChar(255)
+  email     String?   @unique 
+  password  String?   @db.VarChar(255)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @default(now())
+  role      Role
+  Enquiries Enquiry[]
 }
 
 model Enquiry {
-  id                  String      @id @default(cuid()) @db.VarChar(255)
+  id                  String      @id @default(cuid())
   title               String?     @db.VarChar(255)
   courseCode          String      @db.VarChar(255)
   createdAt           DateTime?   @default(now())
   updatedAt           DateTime?   @default(now())
-  status              Status      
+  status              Status      @default(Recieved)
   type                EnquiryType
   extensionDuration   String?     @db.VarChar(255)
   attatchmentLink     String?     @db.VarChar(255)
   assignmentNo        String?     @db.VarChar(255)
   testNo              String?     @db.VarChar(255)
-  user                User?        @relation(fields: [userId], references: [id])
+  user                User      @relation(fields: [userId], references: [id])
   userId              String
+  messageFromStudent  String?      @db.VarChar(255)
+  messageFromConvener String?      @db.VarChar(255)
 }
