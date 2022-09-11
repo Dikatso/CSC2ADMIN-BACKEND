@@ -25,7 +25,24 @@ uvicorn main:app --reload
 pip freeze > requirements.txt
 ```
 
-> generate prisma client
+> Generate prisma client
 ```sh
 prisma generate
 ```
+
+## Making changes to database schema
+> Update the postgreSQL database after modifying the schema
+```sh
+prisma db push
+```
+
+> Generate new code from updated postgreSQL database
+```sh
+prisma generate
+```
+
+> To get newly updated database schema
+```sh
+prisma db pull
+```
+
