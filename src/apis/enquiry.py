@@ -102,6 +102,15 @@ async def update_enquiry(enquiryId: str, updateEnquiryDto: UpdateEnquiryDto):
         return updatedEnquiry
     return None
 
+@router.delete("/enquiry/{enquiryId}", tags=["enquiry"])
+async def delete_enquiry(enquiryId: str):
+    deletedEnquiry = await Enquiry.prisma().delete(
+        where={
+            "id": enquiryId
+        }
+    )
+    return deletedEnquiry
+
 @router.delete("/enquiries", tags=["enquiry"])
 async def delete_all():
     await Enquiry.prisma().delete_many()
