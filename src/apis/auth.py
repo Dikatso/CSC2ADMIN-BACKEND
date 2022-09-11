@@ -33,6 +33,17 @@ class SignInResponse(BaseModel):
     token: str
     user: User
 
+def centraliseDto(dto):
+    # remove keys that have no data
+    centraliseDto = {}
+    for value in (dto):
+        key = list(value)[0]
+        value = list(value)[1]
+        if value is not None:
+            centraliseDto[str(key)] = str(value)
+
+    return centraliseDto
+
 @router.post("/auth/sign-in", tags=["auth"])
 async def sign_in(signInDto: SignInDto):
     user = await User.prisma().find_first(
@@ -62,15 +73,12 @@ async def get_current_user(token=Depends(JWTBearer())):
 @router.post("/auth/sign-up", tags=["auth"])
 async def sign_up(signUpDto: SignUpDto):
     encryptePassword = encryptPassword(signUpDto.password)
+    signUpDto.password = encryptePassword
+    centralisedDto = centraliseDto(signUpDto)
 
     userCreated = await User.prisma().create(
-        data={
-            "name": signUpDto.name,
-            "email": signUpDto.email,
-            "password": encryptePassword,
-            "uctId": signUpDto.uctId,
-            "role": signUpDto.role
-        }
+        data=centralisedDto,
+       
     )
     return userCreated
 
