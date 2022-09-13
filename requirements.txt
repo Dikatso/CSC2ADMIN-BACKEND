@@ -54,3 +54,4 @@ google-cloud-storage
 firebase
 firebase_admin
 autopep8
+fastapi_utils
