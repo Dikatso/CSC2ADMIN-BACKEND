@@ -13,7 +13,6 @@ class CreateEnquiryDto(BaseModel):
     type: str  = None
     title: str = None               
     courseCode: str = None                    
-    enquiryMessage: str = None      
     extensionDuration: str = None   
     attatchmentLink: str = None     
     assignmentNo: str = None        
@@ -22,9 +21,7 @@ class CreateEnquiryDto(BaseModel):
     messageFromConvener: str = None
 
 class UpdateEnquiryDto(BaseModel):
-    enquiryReplyMessage: str = None
     extensionDuration: str = None
-    attatchmentLink: str = None
     assignmentNo: str = None
     status: str = None
     attatchmentLink: str = None
