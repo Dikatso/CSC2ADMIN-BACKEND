@@ -10,7 +10,7 @@ from src.utils.auth import (
     JWTBearer
 )
 
-router = APIRouter()
+router= APIRouter()
 
 
 class SignUpDto(BaseModel):
@@ -51,14 +51,17 @@ async def sign_in(signInDto: SignInDto):
         }
     )
 
+    if user is None:
+        raise HTTPException(status_code=404, detail="User record doesn't exist")
+        
     validated = validatePassword(signInDto.password, user.password)
-    del user.password, user.createdAt, user.Enquiries, user.updatedAt
 
     if validated:
+        del user.password, user.createdAt, user.Enquiries, user.updatedAt
         token = signJWT(user)
         return SignInResponse(token=token, user=user)
 
-    return None
+    raise HTTPException(status_code=404, detail="Incorrect email or password")
 
 
 @router.get("/auth/user", tags=["auth"])
@@ -67,8 +70,10 @@ async def get_current_user(token=Depends(JWTBearer())):
 
     if "userId" in decoded:
         userId = decoded["userId"]
-        return await User.prisma().find_unique(where={"id": userId})
-    return None
+        return await prisma.user.find_unique(where={"id": userId})
+
+    raise HTTPException(status_code=404, detail="Not authenticated")
+
 
 
 @router.post("/auth/sign-up", tags=["auth"])
@@ -77,11 +82,20 @@ async def sign_up(signUpDto: SignUpDto):
     signUpDto.password = encryptePassword
     centralisedDto = centraliseDto(signUpDto)
 
-    userCreated = await User.prisma().create(
-        data=centralisedDto,
-
+    existingUser = await User.prisma().find_first(
+        where={
+            "email": signUpDto.email
+        },
     )
-    return userCreated
+
+    if existingUser:
+        raise HTTPException(status_code=404, detail="Email already in use")
+
+    createdUser = await User.prisma().create(
+        data=centralisedDto,
+    )
+
+    return createdUser
 
 
 @router.get("/auth/users", tags=["auth"])
