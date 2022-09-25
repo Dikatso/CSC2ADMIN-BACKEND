@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-from typing_extensions import Self
 from typing import Dict
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials

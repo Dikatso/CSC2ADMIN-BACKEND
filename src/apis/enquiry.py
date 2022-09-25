@@ -1,10 +1,6 @@
-from typing import List
-from fastapi import APIRouter, Depends
-from src.prisma import prisma
-from src.utils.auth import JWTBearer, decodeJWT
+from fastapi import APIRouter
 from pydantic import BaseModel
-from fastapi import FastAPI, File, UploadFile
-from prisma.models import Enquiry, User
+from prisma.models import Enquiry
 
 router = APIRouter()
 

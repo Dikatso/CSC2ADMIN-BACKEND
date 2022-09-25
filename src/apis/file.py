@@ -1,19 +1,14 @@
-import io, os
-from typing import List
-from fastapi import APIRouter, Depends
-from src.prisma import prisma
-from src.utils.auth import JWTBearer, decodeJWT
-from pydantic import BaseModel
-from fastapi import FastAPI, File, UploadFile
-from prisma.models import Enquiry, User
-from src.file.fileStorage import upload_file
+import os
+from fastapi import APIRouter
+from fastapi import File, UploadFile
+from prisma.models import Enquiry
 from firebase_admin import storage
 import shutil
 
 router = APIRouter()
 
 @router.post("/file/{enquiryId}", tags=["file"])
-async def create_file(enquiryId: str, fileUpload: UploadFile = File(...)):
+async def upload_file(enquiryId: str, fileUpload: UploadFile = File(...)):
     fileName = fileUpload.filename
 
     # save file to local disk
