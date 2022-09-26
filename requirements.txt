@@ -55,3 +55,11 @@ firebase
 firebase_admin
 autopep8
 fastapi_utils
+requests
+pytest-asyncio
+pytest 
+pytest-html
+jsonschema
+nose2
+pytest-print
+pytest-order
