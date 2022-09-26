@@ -51,3 +51,4 @@ prisma db pull
 ```sh
 pytest -v
 ```
+> Note: the file.txt file gets deleted after running the test, so make sure to create another one before running the test again
