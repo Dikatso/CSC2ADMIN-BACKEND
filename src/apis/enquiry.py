@@ -64,7 +64,7 @@ async def find_all_enquiries():
     return enquiry
 
 @router.get("/enquiries/{userId}", tags=["enquiry"])
-async def find_enquiry_by_user(userId: str):
+async def find_enquiries_by_user(userId: str):
     enquries = await Enquiry.prisma().find_many(
         where={
             "userId": userId

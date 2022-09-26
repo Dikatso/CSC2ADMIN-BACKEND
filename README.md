@@ -46,3 +46,9 @@ prisma generate
 prisma db pull
 ```
 
+## Running tests
+> Make sure venv environment is active and server is running, and execute the command
+```sh
+pytest -v
+```
+> Note: the file.txt file gets deleted after running the test, so make sure to create another one before running the test again

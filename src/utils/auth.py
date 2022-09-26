@@ -3,15 +3,15 @@ from typing import Dict
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import os
+from typing_extensions import Self
 import bcrypt
 import jwt
 from prisma.models import User
 
-jwtSecret = os.environ.get("JWT_SECRET")
+jwtSecret = "cs2-admin-secret"
 
 def signJWT(user: User) -> Dict[str, str]:
     EXPIRES = datetime.now(tz=timezone.utc) + timedelta(days=365)
-    print(EXPIRES)
 
     payload = {
         "exp": EXPIRES,
@@ -22,12 +22,9 @@ def signJWT(user: User) -> Dict[str, str]:
 
     return token
 
-
 def decodeJWT(token: str) -> dict:
     try:
         decoded = jwt.decode(token, jwtSecret, algorithms=["HS256"])
-        print("decodeJWT")
-        print(decoded)
         return decoded if decoded["exp"] else None
     except jwt.ExpiredSignatureError:
         print("Token expired. Get new one")
@@ -73,5 +70,4 @@ class JWTBearer(HTTPBearer):
             payload = None
         if payload:
             isTokenValid = True
-        print(isTokenValid)
         return isTokenValid

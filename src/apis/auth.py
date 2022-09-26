@@ -1,5 +1,5 @@
 from pickle import TRUE
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from prisma.models import User
 from src.utils.auth import (
@@ -70,7 +70,7 @@ async def get_current_user(token=Depends(JWTBearer())):
 
     if "userId" in decoded:
         userId = decoded["userId"]
-        return await prisma.user.find_unique(where={"id": userId})
+        return await User.prisma().find_unique(where={"id": userId})
 
     raise HTTPException(status_code=404, detail="Not authenticated")
 
