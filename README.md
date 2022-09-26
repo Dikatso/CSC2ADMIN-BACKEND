@@ -46,3 +46,8 @@ prisma generate
 prisma db pull
 ```
 
+## Running tests
+> Make sure venv environment is active and server is running, and execute the command
+```sh
+pytest -v
+```
