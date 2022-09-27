@@ -20,11 +20,6 @@ uvicorn main:app --reload
 
 ## After installing packes
 
-> run
-```sh
-pip freeze > requirements.txt
-```
-
 > Generate prisma client
 ```sh
 prisma generate
