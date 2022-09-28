@@ -90,6 +90,15 @@ async def sign_up(signUpDto: SignUpDto):
 
     if existingUser:
         raise HTTPException(status_code=404, detail="Email already in use")
+    
+    existingUser = await User.prisma().find_first(
+        where={
+            "uctId": signUpDto.uctId
+        },
+    )
+    
+    if existingUser:
+        raise HTTPException(status_code=404, detail="UCT Id already in use")
 
     createdUser = await User.prisma().create(
         data=centralisedDto,
