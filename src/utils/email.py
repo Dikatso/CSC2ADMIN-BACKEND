@@ -86,7 +86,7 @@ async def send_summary_email(waiverString, numOfAERecieved, numOfTCRecieved, end
                     </p>
                     <div style="font-size: .8rem; margin: 0 30px">
                     <p>Hi """ + str(convener.name) + """:)</p>
-                    <p><b>Here is your weekly summary update: <b></p>
+                    <p><b>Here is your daily summary update: <b></p>
                     <p>Number of unreviewed Assignment Extension requests: <b> """ + str(numOfAERecieved) + """ </b> </p>
                     <p>Number of unreviewed Test Concession requests: <b>""" + str(numOfTCRecieved) + """</b></p>
                     <p><b>List of waivers: <b><br> <br></p>
@@ -116,7 +116,7 @@ async def send_summary_email(waiverString, numOfAERecieved, numOfTCRecieved, end
                     </p>
                     <div style="font-size: .8rem; margin: 0 30px">
                     <p>Hi """ + str(convener.name) + """</p>
-                    <p>Here is your weekly summary update:</p>
+                    <p>Here is your daily summary update:</p>
                     <p>Number of unreviewed Assignment Extension requests: <b> """ + str(numOfAERecieved) + """ </b> </p>
                     <p>Number of unreviewed Test Concession requests: <b>""" + str(numOfTCRecieved) + """</b></p>
                     <p>Kind Regards <br>CS2ADMIN</p>
